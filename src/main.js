@@ -3,9 +3,6 @@ const { app, BrowserWindow } = require('electron');
 const fs = require('fs')
 const path = require('path')
 
-fetch('./TempFile/uni.json')
-.then((response) => response.json())
-.then((json) => console.log(json));
 
 const createWindow = () => {
     // Create the browser window.
@@ -31,59 +28,79 @@ var fileContents = document.getElementById('fileContents')
 
 let pathName = path.join(__dirname, 'Files')
 
-btnCreate.addEventListener('click', function(){  //creating text file when user click CREATE button
-  let file = path.join(pathName, fileName.value)
-  let contents = fileContents.value
-  fs.writeFile(file, contents, function(err){ //param1: textfile yg kita nak write param2: apa yg kita nak write ke text file
-    if(err){
-      return console.log(err)
-    }
-    var txtfile = document.getElementById("fileName").value
-    alert(txtfile + " text file was created")    
-    console.log("The file was created")
-  
-  })
-  
-})
+fetch('./TempFile/uni.json')
+.then((response) => response.json())
+.then((json) => {
+  console.log(json)
 
-btnRead.addEventListener('click', function(){  //read contents of the created text file
-  let file = path.join(pathName, fileName.value)
- 
-  fs.readFile(file, function(err, data){ 
-    if(err){
-      return console.log(err)
-    }
-    fileContents.value = data
-    console.log("The file was read!")
-  })
-  
-})
-
-btnDelete.addEventListener('click', function(){  
-  let file = path.join(pathName, fileName.value)
- 
-  fs.unlink(file, function(err){ 
-    if(err){
-      return console.log(err)
-    }
-    fileName.value = ""
-    fileContents.value = ""
-    console.log("The file was deleted!")
-  })
-  
-})
-
-window.onload = function () {
-  var url = document.location.href,
-      params = url.split('?')[1].split('&'),
-      data = {}, tmp;
-  for (var i = 0, l = params.length; i < l; i++) {
-       tmp = params[i].split('=');
-       data[tmp[0]] = tmp[1];
+  for (let count = 0 ; count < json.length ; count ++){
+    
+    
+    var listing ="University Name : " + String(json[count].name) + "\nUniversity Url/Links : "  + String(json[count].web_pages[0]) + "\nUniversity Country : " + String(json[count].country + "\n-----------------------" + "\n" )
+    fileContents.value = fileContents.value + listing
   }
-  document.getElementById('fileName').innerHTML = data.name;
-  document.getElementById('fileContents').innerHTML = data.name;
-}
+
+
+  btnCreate.addEventListener('click', function(){  //creating text file when user click CREATE button
+    let file = path.join(pathName, fileName.value)
+    let contents = fileContents.value
+    fs.writeFile(file, contents, function(err){ //param1: textfile yg kita nak write param2: apa yg kita nak write ke text file
+      if(err){
+        return console.log(err)
+      }
+      var txtfile = document.getElementById("fileName").value
+      alert(txtfile + " text file was created")    
+      console.log("The file was created")
+    
+    })
+    
+  })
+  
+  btnRead.addEventListener('click', function(){  //read contents of the created text file
+    let file = path.join(pathName, fileName.value)
+   
+    fs.readFile(file, function(err, data){ 
+      if(err){
+        return console.log(err)
+      }
+      fileContents.value = data
+      console.log("The file was read!")
+    })
+    
+  })
+  
+  btnDelete.addEventListener('click', function(){  
+    let file = path.join(pathName, fileName.value)
+   
+    fs.unlink(file, function(err){ 
+      if(err){
+        return console.log(err)
+      }
+      fileName.value = ""
+      fileContents.value = ""
+      console.log("The file was deleted!")
+    })
+    
+  })
+  
+  window.onload = function () {
+    var url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+    document.getElementById('fileName').innerHTML = data.name;
+    document.getElementById('fileContents').innerHTML = data.name;
+  }
+  
+  
+
+});
+
+
+
 
 
 // This method will be called when Electron has finished
