@@ -56,7 +56,14 @@ app.on('activate', () => {
 
 
 
+
+
+
+
 // function start here 
+
+
+
 function display(){
   var u_name = document.getElementById("name").value;
   var u_country = document.getElementById("country").value;  // get university name and country name as input
@@ -66,14 +73,24 @@ function display(){
   fetch(`http://universities.hipolabs.com/search?name=${u_name}&country=${u_country}`) // starting of fetch based on the input
   .then((response) => response.json())
   .then((dataset) => {
+
     
     // make sure the data is random,  the list has multiple duplicate things resulting the same 
-    console.log(dataset) 
-    var data = [...new Set(dataset)]
-
+    const data = [...new Map(dataset.map((object) => [object.name, object])).values()];
+    console.log(data)
     const table_store = document.getElementById("table-display")  // select empty table from index.HTML
-  
     
+
+    // this is random generator to make sure that the result for university find will not be the same
+    var arr = [];
+    while(arr.length < data.length){
+
+      var r = Math.floor(Math.random() * data.length);
+      if(arr.indexOf(r) === -1) arr.push(r);
+      }
+    console.log(arr);
+
+
 
     if (table_store.rows.length > 1){ // just an condition if table lenght > 5 then we removing the table row element else they will overlapping
 
@@ -133,7 +150,7 @@ function display(){
       const content = document.createElement("td")
       const content1 = document.createElement("td")
       const content2 = document.createElement("td") 
-      let random = (Math.floor(Math.random() * (data.length/2))) + (Math.floor(Math.random() * (data.length/2))) //give random number
+      //let random = (Math.floor(Math.random() * (data.length/2))) + (Math.floor(Math.random() * (data.length/2))) //give random number
 
       
       if (data.length == 1){
@@ -151,14 +168,14 @@ function display(){
       }
 
       else{
-        content.innerHTML = data[random].name    //Get a random university from the data we fetch
-        content1.innerHTML = data[random].web_pages[0];
-        content2.innerHTML = data[random].country
+        content.innerHTML = data[arr[count]].name    //Get a random university from the data we fetch
+        content1.innerHTML = data[arr[count]].web_pages[0];
+        content2.innerHTML = data[arr[count]].country
         row.append(content)
         row.append(content1)
         row.append(content2)
         table_store.append(row)
-        storing.push(data[random])
+        storing.push(data[arr[count]])
       }      
     }
 
@@ -167,6 +184,7 @@ function display(){
     var section = document.querySelector(".second-section")
     var paragraph = document.createElement("p")
     paragraph.style.color="white"
+    paragraph.style.margin="10px 0px 0px 0px"
   
 
     if (section.lastElementChild != document.querySelector("p") && section.lastElementChild == table_store  ){ //check if an messages already exits or not
@@ -205,4 +223,5 @@ function display(){
 }
 
 // index code end
+
 
