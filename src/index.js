@@ -1,4 +1,4 @@
-const { table } = require('console');
+const { table, count } = require('console');
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const { formatWithOptions } = require('util');
@@ -53,36 +53,45 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+
+// function start here 
 function display(){
   var u_name = document.getElementById("name").value;
-  var u_country = document.getElementById("country").value; 
+  var u_country = document.getElementById("country").value;  // get university name and country name as input
 
-  var namestoring = []
-  namestoring.push(u_name)
-  namestoring.push(u_country)
 
-  fetch(`http://universities.hipolabs.com/search?name=${u_name}&country=${u_country}`)
+
+  fetch(`http://universities.hipolabs.com/search?name=${u_name}&country=${u_country}`) // starting of fetch based on the input
   .then((response) => response.json())
-  .then((data) => {
+  .then((dataset) => {
     
-    console.log(data) 
+    // make sure the data is random,  the list has multiple duplicate things resulting the same 
+    console.log(dataset) 
+    var data = [...new Set(dataset)]
 
-    const table_store = document.getElementById("table-display")
+    const table_store = document.getElementById("table-display")  // select empty table from index.HTML
   
     
 
-    if (table_store.rows.length > 1){ // ust an condition if list lenght == 5 then we removing the "li" element
+    if (table_store.rows.length > 1){ // just an condition if table lenght > 5 then we removing the table row element else they will overlapping
 
       while (table_store.rows[0]){
-        table_store.removeChild(table_store.rows[0]) //Remove "li" element in html if there is already previous "li" 
+        table_store.removeChild(table_store.rows[0]) //Remove "tr" element in html if there is already previous "tr" 
       } 
 
-      //list_store.innerHTML = "" (another method of removing the "li" but it looks so bland and not smort!!!)      
     }
-    // core operation of creating all ther random five links
 
+    // core operation of displaying all of the 5 or 10 links
+
+    //condition to check if data.length < 9 then we wil only display 5 links
     if (data.length > 9 ){
       counter = 10
+    }
+
+    else if (data.length == 1 || data.length == 2){
+      counter = 1
     }
 
     else{
@@ -91,6 +100,9 @@ function display(){
     
     var storing = []
 
+
+    // the start of the loop and display
+
     for (let count = 0; count < counter ; count++){
       
    
@@ -98,10 +110,10 @@ function display(){
      if (table_store.firstElementChild == null || data == []){
       table_store.style.border = "3px solid rgba(0, 0, 0, 0.7)"
       table_store.style.borderSpacing="10px" 
-      const first_row = document.createElement("tr")
+      const first_row = document.createElement("tr")  //styling the display table
       
       table_store.append(first_row)
-      const name = document.createElement("td")
+      const name = document.createElement("td")   // make the categorising row before displaying 
       const URL_ = document.createElement("td")
       const country =document.createElement("td")
 
@@ -121,11 +133,11 @@ function display(){
       const content = document.createElement("td")
       const content1 = document.createElement("td")
       const content2 = document.createElement("td") 
-      let random = (Math.floor(Math.random() * data.length)) //give random number
+      let random = (Math.floor(Math.random() * (data.length/2))) + (Math.floor(Math.random() * (data.length/2))) //give random number
 
       
       if (data.length == 1){
-        
+        // data fetch is in list therefore data require an index number to get an object
         content.innerHTML = data[0].name
         content1.innerHTML = data[0].web_pages[0];
         content2.innerHTML = data[0].country
@@ -139,7 +151,7 @@ function display(){
       }
 
       else{
-        content.innerHTML = data[random].name
+        content.innerHTML = data[random].name    //Get a random university from the data we fetch
         content1.innerHTML = data[random].web_pages[0];
         content2.innerHTML = data[random].country
         row.append(content)
@@ -150,9 +162,34 @@ function display(){
       }      
     }
 
+    // messages 
+
+    var section = document.querySelector(".second-section")
+    var paragraph = document.createElement("p")
+    paragraph.style.color="white"
+  
+
+    if (section.lastElementChild != document.querySelector("p") && section.lastElementChild == table_store  ){ //check if an messages already exits or not
+      if (data == [] ){
+      paragraph.innerHTML= ""
+      section.append(paragraph)
+      }
+
+      else{
+      paragraph.innerHTML = "You can Save this list by clicking the CRUD link on the top of the header!!";
+      section.append(paragraph)
+  
+      }
+    }
+    
+
+    // messages 
+
+    // a temporary file created for to store an object we display as a json used for the next page
     let pathName = path.join(__dirname, 'TempFile')
-    var stringstore = JSON.stringify(storing)
     let file = path.join(pathName, "uni.json")
+    
+    var stringstore = JSON.stringify(storing)
 
     fs.writeFile(file, stringstore, function(err) {
     if(err){
@@ -164,7 +201,8 @@ function display(){
 
   })
 
+ 
 }
 
-
+// index code end
 

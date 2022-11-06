@@ -1,4 +1,4 @@
-
+/* Css for General Structure of HTML */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,Arial, sans-serif;
   height: 100vh;
@@ -43,6 +43,11 @@ table{
   padding: 5px;
 }
 
+/* Css for General Structure of HTML */
+
+
+/* Css for Article Main */
+
 main , .input-box ,.title {
   display: flex;
 }
@@ -66,7 +71,7 @@ main p{
 
 .input-box{
   justify-content: space-between;
-  align-items: center; /** Let this be the wander of zayyad discovery ,found that if i tried to center align on y axis for input button it return to normal size**/
+  align-items: center; /** Let this be the wonder of zayyad discovery. I found that if i tried to center align on y axis for input button it return to normal size**/
 }
 
 .input-box input{
@@ -74,6 +79,11 @@ main p{
   padding: 6px;
 }
 
+/* Css for Article Main */
+
+
+
+/* Css for The Header */
 header{
   width: 100vw;
 }
@@ -129,10 +139,23 @@ header{
   transform: scaleX(1);
 }
 
+/* Css for The Header */
+
+/* Css for Footer */
 
 footer{
   justify-content: center;
   border-top: 3px solid rgba(0, 0, 0, 0.7);
+}
+
+/* Css for Footer */
+
+
+
+/* CSS for javascript function */
+
+.second-section{
+  text-align: center;
 }
 
 #table-display{
@@ -180,6 +203,9 @@ footer{
   box-shadow: rgba(79, 79, 92, 0.1) 0 0 0 1px inset, rgba(79, 79, 92, 0.2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(79, 79, 92, 0.3) 0 0 0 4px;
 }
 
+/* CSS for javascript function */
+
+
 
 /* CRUD PAGE */
 
@@ -189,8 +215,19 @@ footer{
   background-color: rgba(42, 41, 41, 0.7);
   color: white;
   padding: 20px 60px;
+  border-radius: 20px;
 }
 
 .mainWrapper .form-group input , .mainWrapper .form-group textarea {
   color: black;
 }
+
+
+#country{
+  width: 178.4px;
+  height: 32px;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+/* CRUD PAGE */

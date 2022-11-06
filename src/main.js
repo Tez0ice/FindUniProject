@@ -20,6 +20,7 @@ const createWindow = () => {
 
 }
 
+// creating file starting here
 var btnCreate = document.getElementById('btnCreate')
 var btnRead = document.getElementById('btnRead')
 var btnDelete = document.getElementById('btnDelete')
@@ -28,10 +29,13 @@ var fileContents = document.getElementById('fileContents')
 
 let pathName = path.join(__dirname, 'Files')
 
+// fetch data from temporary uni store for user to create 
 fetch('./TempFile/uni.json')
 .then((response) => response.json())
 .then((json) => {
   console.log(json)
+
+  
 
   for (let count = 0 ; count < json.length ; count ++){
     
