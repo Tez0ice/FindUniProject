@@ -24,6 +24,7 @@ const createWindow = () => {
 var btnCreate = document.getElementById('btnCreate')
 var btnRead = document.getElementById('btnRead')
 var btnDelete = document.getElementById('btnDelete')
+var btnUpdate = document.getElementById('btnUpdate')
 var fileName = document.getElementById('fileName')
 var fileContents = document.getElementById('fileContents')
 
@@ -54,7 +55,6 @@ fetch('./TempFile/uni.json')
       }
       var txtfile = document.getElementById("fileName").value
       alert(txtfile + " text file was created")    
-      console.log("The file was created")
     
     })
     
@@ -68,7 +68,21 @@ fetch('./TempFile/uni.json')
         return console.log(err)
       }
       fileContents.value = data
-      console.log("The file was read!")
+      alert("The file was read!")
+    })
+    
+  })
+
+  btnUpdate.addEventListener('click',function(){
+    let file = path.join(pathName, fileName.value)
+    let contents = fileContents.value 
+    fs.writeFile(file, contents, function(err){ //Identical with adding the file but this time it update the file only
+      if(err){
+        return console.log(err)
+      }
+      var txtfile = document.getElementById("fileName").value
+      alert( txtfile + " file was Updated")
+    
     })
     
   })
@@ -82,7 +96,7 @@ fetch('./TempFile/uni.json')
       }
       fileName.value = ""
       fileContents.value = ""
-      console.log("The file was deleted!")
+      alert("The file was deleted!")
     })
     
   })

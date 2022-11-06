@@ -79,6 +79,8 @@ main p{
   align-items: center; /** Let this be the wonder of zayyad discovery. I found that if i tried to center align on y axis for input button it return to normal size**/
 }
 
+
+
 .input-box input{
   border-radius: 6px;
   padding: 6px;
@@ -125,6 +127,15 @@ header{
   position: relative;
 }
 
+.header ul li a button{
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 17px;
+  color: rgb(239, 232, 232);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,Arial, sans-serif;
+}
+
 .header ul li a::before{
     content: '';
     position: absolute;
@@ -169,7 +180,7 @@ footer{
   border-radius: 25px;
 }
 
-/* CSS */
+/* CSS For button javascript function*/
 .click-button {
   appearance: button;
   backface-visibility: hidden;

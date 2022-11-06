@@ -117,7 +117,8 @@ function display(){
     
     var storing = []
 
-
+    var section = document.querySelector(".second-section") // used for addding paragraph later at the bottom of the table
+    
     // the start of the loop and display
 
     for (let count = 0; count < counter ; count++){
@@ -163,6 +164,7 @@ function display(){
         row.append(content2)
         table_store.append(row)
         storing.push(data[0])
+        section.style.alignSelf="center"
         
         { break; }  
       }
@@ -181,7 +183,7 @@ function display(){
 
     // messages 
 
-    var section = document.querySelector(".second-section")
+    
     var paragraph = document.createElement("p")
     paragraph.style.color="white"
     paragraph.style.margin="10px 0px 0px 0px"
